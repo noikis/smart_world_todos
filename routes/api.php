@@ -19,3 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/User/register', [AuthController::class, 'register']);
 Route::post('/User/login', [AuthController::class, 'login']);
 
+// Secured Routes
+Route::middleware('auth:sanctum')->group(function () {
+    Route::put('/User/refresh', [AuthController::class, 'refresh']);
+});
+

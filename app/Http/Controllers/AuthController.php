@@ -38,4 +38,22 @@ class AuthController extends Controller
         ];
         return response()->json($res, Response::HTTP_CREATED);
     }
+
+    public function refresh(Request $request)
+    {
+        $user = auth()->user();
+
+        if(!$user->refresh_token === $request['refresh_token'] ) {
+            return response()->json(['message' => 'Invalid token'], Response::HTTP_UNAUTHORIZED);
+        }
+        
+        $user->tokens()->delete();
+        $res = [
+            'data' => [
+                'access_token' => $user->createToken('access_token')->plainTextToken,
+            ],
+            'message' => 'Refreshed!'
+        ];
+        return response()->json($res);
+    }
 }
