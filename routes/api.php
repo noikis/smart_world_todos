@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ListController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +19,17 @@ use Illuminate\Support\Facades\Route;
 // Auth routes
 Route::post('/User/register', [AuthController::class, 'register']);
 Route::post('/User/login', [AuthController::class, 'login']);
+Route::get('/List/getItems', [ListController::class, 'index']);
 
 // Secured Routes
 Route::middleware('auth:sanctum')->group(function () {
+    // Auth
     Route::put('/User/refresh', [AuthController::class, 'refresh']);
+    // Lists
+    Route::post('/List/create', [ListController::class, 'store']);
+    Route::put('/List/update/{id}', [ListController::class, 'update']);
+    Route::get('/List/getItem/{id}', [ListController::class, 'show']);
+
+
 });
 

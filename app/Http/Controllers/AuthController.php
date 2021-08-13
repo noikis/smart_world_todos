@@ -46,7 +46,8 @@ class AuthController extends Controller
         if(!$user->refresh_token === $request['refresh_token'] ) {
             return response()->json(['message' => 'Invalid token'], Response::HTTP_UNAUTHORIZED);
         }
-        
+
+
         $user->tokens()->delete();
         $res = [
             'data' => [

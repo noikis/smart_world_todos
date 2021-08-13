@@ -32,6 +32,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'pivot'
     ];
 
     /**
@@ -40,6 +41,12 @@ class User extends Authenticatable
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
+    }
+
+    public function lists()
+    {
+        return $this->belongsToMany(Listing::class, 'user_lists',
+            'user_id', 'list_id')->withTimestamps();
     }
 
 }
